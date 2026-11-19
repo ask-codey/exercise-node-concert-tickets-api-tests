@@ -1,0 +1,36 @@
+# Requests to try with VS Code's REST Client extension.
+# Start the API first (npm start), then click Send Request above any request.
+# The data lives in memory, so it starts fresh each time the API starts.
+
+### Every show: 200
+GET http://localhost:3100/shows
+
+### One show: 200, Midnight Brass Band with 4 seats left
+GET http://localhost:3100/shows/2
+
+### A show that isn't there: 404
+GET http://localhost:3100/shows/99
+
+### Buy 2 tickets for show 2: 201, ticket 1 with total 66 (send it once, then ask for show 2 again)
+POST http://localhost:3100/shows/2/tickets
+Content-Type: application/json
+
+{ "quantity": 2 }
+
+### More tickets than are left: 409 (show 2 starts with 4 seats)
+POST http://localhost:3100/shows/2/tickets
+Content-Type: application/json
+
+{ "quantity": 5 }
+
+### A quantity that isn't a whole number from 1 to 8: 400
+POST http://localhost:3100/shows/2/tickets
+Content-Type: application/json
+
+{ "quantity": "two" }
+
+### A refund for ticket 1: 204, and show 2 gets its seats back (buy ticket 1 first)
+DELETE http://localhost:3100/tickets/1
+
+### A ticket that isn't there: 404
+DELETE http://localhost:3100/tickets/99
