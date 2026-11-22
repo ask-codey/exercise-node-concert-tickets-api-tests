@@ -1,0 +1,216 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-11-22T00:00:00Z",
+  "__export_source": "ask-codey:exercise",
+  "resources": [
+    {
+      "_id": "wrk_tickets",
+      "_type": "workspace",
+      "parentId": null,
+      "name": "Concert Tickets API Tests",
+      "description": "Exercise: Concert Tickets API Tests. Start the server first, then send the requests in order; each one's description says what to expect. If your server runs at another address, change base_url in the Base Environment.",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_tickets_base",
+      "_type": "environment",
+      "parentId": "wrk_tickets",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3100"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 0
+    },
+    {
+      "_id": "jar_tickets",
+      "_type": "cookie_jar",
+      "parentId": "wrk_tickets",
+      "name": "Default Jar",
+      "cookies": []
+    },
+    {
+      "_id": "req_tickets_100",
+      "_type": "request",
+      "parentId": "wrk_tickets",
+      "name": "1. Every show",
+      "description": "Expect: 200.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/shows",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 100,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_tickets_110",
+      "_type": "request",
+      "parentId": "wrk_tickets",
+      "name": "2. One show",
+      "description": "Expect: 200, Midnight Brass Band with 4 seats left.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/shows/2",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 110,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_tickets_120",
+      "_type": "request",
+      "parentId": "wrk_tickets",
+      "name": "3. A show that isn't there",
+      "description": "Expect: 404.",
+      "method": "GET",
+      "url": "{{ _.base_url }}/shows/99",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 120,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_tickets_130",
+      "_type": "request",
+      "parentId": "wrk_tickets",
+      "name": "4. Buy 2 tickets for show 2",
+      "description": "Expect: 201, ticket 1 with total 66 (send it once, then ask for show 2 again)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/shows/2/tickets",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"quantity\": 2 }"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 130,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_tickets_140",
+      "_type": "request",
+      "parentId": "wrk_tickets",
+      "name": "5. More tickets than are left",
+      "description": "Expect: 409 (show 2 starts with 4 seats)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/shows/2/tickets",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"quantity\": 5 }"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 140,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_tickets_150",
+      "_type": "request",
+      "parentId": "wrk_tickets",
+      "name": "6. A quantity that isn't a whole number from 1 to 8",
+      "description": "Expect: 400.",
+      "method": "POST",
+      "url": "{{ _.base_url }}/shows/2/tickets",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"quantity\": \"two\" }"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 150,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_tickets_160",
+      "_type": "request",
+      "parentId": "wrk_tickets",
+      "name": "7. A refund for ticket 1",
+      "description": "Expect: 204, and show 2 gets its seats back (buy ticket 1 first)",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/tickets/1",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 160,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_tickets_170",
+      "_type": "request",
+      "parentId": "wrk_tickets",
+      "name": "8. A ticket that isn't there",
+      "description": "Expect: 404.",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/tickets/99",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {},
+      "metaSortKey": 170,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    }
+  ]
+}

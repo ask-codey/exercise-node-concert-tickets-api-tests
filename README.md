@@ -10,7 +10,7 @@ Starlight Stage, a small concert venue, sells its tickets through this Express A
 - `data.js`: the three shows and the tickets sold, kept in memory, and `resetData()`, which puts them back the way they start. Ready to use.
 - `tickets.js`: `orderTotal(price, quantity)`, what an order costs: the ticket price times the number of tickets, plus a $2 fee, with no fee from 6 tickets. Ready to use.
 - `server.js`: starts the API at `http://localhost:3100`. Ready to use.
-- `tickets.http`: the requests to try, for VS Code's REST Client extension. Ready to use.
+- `tickets.insomnia.json`: the requests to try, as an Insomnia collection. Ready to use.
 - `app.test.js`: your tests. It resets the data before every test and has one worked example. For you to finish.
 - `check/`: the check that runs your tests against three copies of `app.js` with a bug planted in each. You don't need to change it, and it's more fun if you don't read the copies until you're done.
 - `package.json` and `package-lock.json`: the project's settings, its scripts (`start`, `dev`, `test` and `check`) and its two packages at exact versions, Express 5.3.0 and Supertest 7.3.2. Ready to use.
@@ -31,7 +31,7 @@ It makes a `node_modules` folder. That folder is in `.gitignore`, so Git leaves 
 npm start
 ```
 
-The terminal says `Starlight Stage's tickets API is listening on http://localhost:3100` and keeps running. Open `tickets.http` and click **Send Request** above any request; REST Client shows the answer beside it. The data lives in memory, so it starts fresh each time the API starts. Stop it with **Ctrl+C**.
+The terminal says `Starlight Stage's tickets API is listening on http://localhost:3100` and keeps running. In Insomnia, click **Import** in your `Node.js in Depth` project, choose `tickets.insomnia.json`, and send any request; its description says what to expect. The data lives in memory, so it starts fresh each time the API starts. Stop it with **Ctrl+C**.
 
 ## Write your tests
 
